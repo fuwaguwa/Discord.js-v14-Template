@@ -1,4 +1,4 @@
-# Discord.js v13 Template
+# Discord.js v14 Template
 
 1. Modify `.env.example` to `.env` and fill out the missing information
 2. Run `npm install`
