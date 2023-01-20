@@ -4,7 +4,7 @@ import {
 	MessageApplicationCommandData,
 	MessageContextMenuCommandInteraction,
 	UserApplicationCommandData,
-	UserContextMenuCommandInteraction,
+	UserContextMenuCommandInteraction
 } from "discord.js";
 import { FClient } from "../structures/Client";
 

@@ -2,12 +2,12 @@ import {
 	ApplicationCommandDataResolvable,
 	Client,
 	ClientEvents,
-	Collection,
+	Collection
 } from "discord.js";
 import {
 	ChatInputCommandType,
 	MessageCommandType,
-	UserCommandType,
+	UserCommandType
 } from "../typings/Command";
 import glob from "glob";
 import { promisify } from "util";
@@ -16,38 +16,47 @@ import { Event } from "./Event";
 
 const promiseGlob = promisify(glob);
 
-export class FClient extends Client {
+export class FClient extends Client 
+{
 	commands: Collection<string, ChatInputCommandType> = new Collection();
 	messageCommands: Collection<string, MessageCommandType> = new Collection();
 	userCommands: Collection<string, UserCommandType> = new Collection();
 
-	constructor() {
-		super({ intents: 32767 });
+	constructor() 
+	{
+		super({ intents: 32767, });
 	}
 
-	start() {
+	start() 
+	{
 		this.registerModules();
 		this.login(process.env.botToken);
 	}
 
-	private async importFile(filePath: string) {
+	private async importFile(filePath: string) 
+	{
 		return (await import(filePath))?.default;
 	}
 
 	private async registerCommands({
 		commands,
 		guildId,
-	}: RegisterCommandsOptions) {
-		if (guildId) {
+	}: RegisterCommandsOptions) 
+	{
+		if (guildId) 
+		{
 			this.guilds.cache.get(guildId)?.commands.set(commands);
 			console.log(`Registering Command | Guild: ${guildId}`);
-		} else {
+		}
+		else 
+		{
 			this.application?.commands.set(commands);
 			console.log("Registering Commands | Global");
 		}
 	}
 
-	private async registerModules() {
+	private async registerModules() 
+	{
 		/**
 		 * Registering Slash Commands
 		 */
@@ -63,7 +72,8 @@ export class FClient extends Client {
 			`${__dirname}/../menu/user/*/*{.ts,.js}`
 		);
 
-		commandFiles.forEach(async (filePath) => {
+		commandFiles.forEach(async filePath => 
+		{
 			const command: ChatInputCommandType = await this.importFile(filePath);
 			if (!command.name) return;
 
@@ -71,7 +81,8 @@ export class FClient extends Client {
 			fCommands.push(command);
 		});
 
-		messageFiles.forEach(async (filePath) => {
+		messageFiles.forEach(async filePath => 
+		{
 			const command: MessageCommandType = await this.importFile(filePath);
 			if (!command.name) return;
 
@@ -79,7 +90,8 @@ export class FClient extends Client {
 			fCommands.push(command);
 		});
 
-		userFiles.forEach(async (filePath) => {
+		userFiles.forEach(async filePath => 
+		{
 			const command: UserCommandType = await this.importFile(filePath);
 			if (!command.name) return;
 
@@ -87,7 +99,8 @@ export class FClient extends Client {
 			fCommands.push(command);
 		});
 
-		this.on("ready", () => {
+		this.on("ready", () => 
+		{
 			this.registerCommands({
 				commands: fCommands,
 				guildId: process.env.guildId,
@@ -99,7 +112,8 @@ export class FClient extends Client {
 		 */
 		const eventFiles = await promiseGlob(`${__dirname}/../events/*{.ts,.js}`);
 
-		eventFiles.forEach(async (filePath) => {
+		eventFiles.forEach(async filePath => 
+		{
 			const event: Event<keyof ClientEvents> = await this.importFile(filePath);
 			this.on(event.event, event.run);
 		});
