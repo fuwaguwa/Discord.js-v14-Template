@@ -1,7 +1,8 @@
 {
     "env": {
-        "browser": true,
-        "es2021": true
+        "node": true,
+        "commonjs": true,
+        "es6": true
     },
     "overrides": [
     ],
@@ -13,13 +14,28 @@
     "plugins": [
         "@typescript-eslint"
     ],
+    "extends": "eslint:recommended",
     "rules": {
         "semi": ["warn", "always"],
-        "quotes": ["warn", "double"],
+        "quotes": ["warn", "double", {
+            "allowTemplateLiterals": true
+        }],
         "object-curly-spacing": ["warn", "always"],
-        "indent": ["error", "tab", { "SwitchCase": 1 }],
+        "indent": ["warn", "tab", { "SwitchCase": 1 }],
         "space-before-blocks": ["warn", "always"],
-        "arrow-parens": ["warn", "as-needed"],
+        "arrow-parens": ["warn", "as-needed", {
+            "requireForBlockBody": true
+        }],
+        "no-mixed-spaces-and-tabs": ["warn", "smart-tabs"],
+        "no-useless-escape": ["off"],
+        "no-async-promise-executor": ["off"],
+        "brace-style": ["error", "allman", { 
+            "allowSingleLine": true 
+        }],
+        "comma-spacing": ["error", {
+            "before": false,
+            "after": true
+        }],
         "comma-dangle": ["warn", {
             "arrays": "never",
             "objects": "always",
@@ -27,6 +43,10 @@
             "exports": "never",
             "functions": "never"
         }],
-        "brace-style": ["error", "allman", { "allowSingleLine": true }]
+        "no-unused-vars": ["warn", {
+            "vars": "local",
+            "args": "none",
+            "caughtErrors": "none"
+        }]
     }
 }

@@ -5,8 +5,8 @@
     "scripts": {
         "start": "node dist/index.js",
         "dev": "ts-node-dev src/index.ts",
-        "prettify": "prettier --write \"**/*.ts\"",
-        "eslint": "npx eslint --fix \"**/*.ts\"",
+        "prettify": "prettier --write **/*.ts",
+        "eslint": "npx eslint --fix **/*.ts",
         "format": "npm run prettify && npm run eslint",
         "build": "tsc",
         "watch": "tsc -w"
